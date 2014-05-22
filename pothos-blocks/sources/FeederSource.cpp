@@ -66,5 +66,5 @@ private:
     std::queue<Pothos::Object> _messages;
 };
 
-static Pothos::BlockRegistry registerSocketSink(
+static Pothos::BlockRegistry registerFeederSource(
     "/blocks/sources/feeder_source", &FeederSource::make);

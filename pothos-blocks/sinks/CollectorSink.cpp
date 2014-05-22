@@ -5,7 +5,22 @@
 #include <cstring> //memcpy
 #include <vector>
 
-class CollectorSink : Pothos::Block
+/***********************************************************************
+ * |PothosDoc Collector Sink
+ *
+ * The collector sink saves everything you feed it.
+ * This block is primarily used for testing purposes.
+ *
+ * |category /Sinks
+ * |keywords sink collector
+ *
+ * |param dtype[Data Type] The datatype this block consumes.
+ * |preview disable
+ * |default "float32"
+ *
+ * |factory /blocks/sinks/collector_sink(dtype)
+ **********************************************************************/
+class CollectorSink : public Pothos::Block
 {
 public:
     CollectorSink(const Pothos::DType &dtype)
@@ -74,5 +89,5 @@ private:
     std::vector<Pothos::Object> _messages;
 };
 
-static Pothos::BlockRegistry registerSocketSink(
-    "/blocks/sources/collector_sink", &CollectorSink::make);
+static Pothos::BlockRegistry registerCollectorSink(
+    "/blocks/sinks/collector_sink", &CollectorSink::make);
