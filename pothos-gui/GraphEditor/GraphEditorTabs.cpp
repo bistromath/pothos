@@ -112,6 +112,11 @@ void GraphEditorTabs::handleSave(void)
     //no file path? redirect to save as
     if (editor->getCurrentFilePath().isEmpty()) this->handleSaveAs();
 
+    //read only? same deal.
+    auto file = new QFile(editor->getCurrentFilePath());
+    bool readOnly = !(file->permissions() & QFileDevice::WriteUser);
+    if(readOnly) this->handleSaveAs();
+
     //otherwise, just save the topology
     else editor->save();
 }

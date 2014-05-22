@@ -18,6 +18,7 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QMimeData>
+#include <QFile>
 #include <fstream>
 #include <iostream>
 #include <cassert>
@@ -127,8 +128,19 @@ void GraphEditor::updateEnabledActions(void)
 
     //update window title
     QString subtext = this->getCurrentFilePath();
-    if (subtext.isEmpty()) subtext = tr("untitled");
-    emit this->newTitleSubtext(tr("Editing ") + subtext);
+    QString title(tr("Editing "));
+    if (subtext.isEmpty())
+    {
+        title += tr("untitled");
+    }
+    else
+    {
+        title += subtext;
+        auto file = new QFile(subtext);
+        bool readOnly = !(file->permissions() & QFileDevice::WriteUser);
+        if (readOnly) title += " (read-only)";
+    }
+    emit this->newTitleSubtext(title);
 }
 
 void GraphEditor::handleCurrentChanged(int)
